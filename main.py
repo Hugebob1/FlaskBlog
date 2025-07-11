@@ -113,14 +113,14 @@ gravatar = Gravatar(app,
 #decorator for admin only
 def admin_only(func):
     @wraps(func)
-    def wrapper():
+    def wrapper(*args, **kwargs):
         if current_user.is_authenticated:
-            if current_user.id!=1:
+            if current_user.id != 1:
                 abort(403)
-        else: abort(403)
-        return func()
+        else:
+            abort(403)
+        return func(*args, **kwargs)
     return wrapper
-
 
 
 # Use Werkzeug to hash the user's password when creating a new user.
