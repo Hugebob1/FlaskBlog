@@ -15,8 +15,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, DataRequired, LoginForm, CommentForm
 from typing import List
 from dotenv import load_dotenv
+import sys
+print("Python version:", sys.version)
 load_dotenv()
-
+#test
 '''
 Make sure the required packages are installed: 
 Open the Terminal in PyCharm (bottom left). 
