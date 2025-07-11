@@ -1,0 +1,32 @@
+# 🔹 Środowisko virtualne (np. .venv w katalogu projektu)
+.venv/
+venv/
+env/
+
+# 🔹 Pliki Pythona i cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 🔹 Folder z bazą danych i plikami lokalnymi (np. Flask)
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# 🔹 Pliki środowiskowe
+.env
+*.env
+
+# 🔹 PyCharm i inne edytory
+.idea/
+*.iml
+
+# 🔹 Logi, backupy, tymczasowe
+*.log
+*.bak
+*.tmp
+
+# 🔹 Systemowe
+.DS_Store
+Thumbs.db
