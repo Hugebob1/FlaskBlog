@@ -158,6 +158,15 @@ p {
   margin-bottom: 1rem;
 }
 
+.post-content img{
+  max-width: 100% !important;
+  height: auto !important;
+  width: auto !important;
+  display: block;
+  margin: 0.5em auto;
+  text-align: center;
+}
+
 abbr[title] {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
