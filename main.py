@@ -139,7 +139,7 @@ def register():
         login_user(new_user)
         return redirect(url_for('get_all_posts'))
 
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form, year=get_year())
 
 
 # Retrieve a user from the database based on their email.
@@ -163,7 +163,7 @@ def login():
             flash('This email hasn\'t been registered.')
             return redirect(url_for('login'))
 
-    return render_template("login.html", form=form, current_user=current_user)
+    return render_template("login.html", form=form, current_user=current_user, year=get_year())
 
 
 @app.route('/logout')
@@ -200,7 +200,7 @@ def show_post(post_id):
                 db.session.add(Comment(text=text, comment_author=current_user, post=requested_post))
                 db.session.commit()
 
-    return render_template("post.html", post=requested_post, form=form)
+    return render_template("post.html", post=requested_post, form=form, year=get_year())
 
 
 # Use a decorator so only an admin user can create a new post
@@ -220,7 +220,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form)
+    return render_template("make-post.html", form=form, year=get_year())
 
 
 # Use a decorator so only an admin user can edit a post
@@ -243,7 +243,7 @@ def edit_post(post_id):
         post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
-    return render_template("make-post.html", form=edit_form, is_edit=True)
+    return render_template("make-post.html", form=edit_form, is_edit=True, year=get_year())
 
 
 # Use a decorator so only an admin user can delete a post
@@ -258,7 +258,7 @@ def delete_post(post_id):
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", year=get_year())
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
@@ -271,7 +271,7 @@ def contact():
         sender = SendEmail()
         sender.send_email(user_email=email, message=message, user_phone=phone, user_name=name)
 
-    return render_template("contact.html")
+    return render_template("contact.html", year=get_year())
 
 if __name__ == "__main__":
     app.config['DEBUG'] = True
