@@ -1,7 +1,7 @@
 from datetime import date
 import os
 import werkzeug
-from flask import Flask, abort, render_template, redirect, url_for, flash
+from flask import Flask, abort, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -16,21 +16,14 @@ from forms import CreatePostForm, RegisterForm, DataRequired, LoginForm, Comment
 from typing import List
 from dotenv import load_dotenv
 import sys
+from sendEmail import SendEmail
+
+
+
 print("Python version:", sys.version)
 load_dotenv()
 #test
-'''
-Make sure the required packages are installed: 
-Open the Terminal in PyCharm (bottom left). 
 
-On Windows type:
-python -m pip install -r requirements.txt
-
-On MacOS type:
-pip3 install -r requirements.txt
-
-This will install the packages from the requirements.txt for this project.
-'''
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
@@ -96,6 +89,9 @@ class Comment(db.Model):
 
 with app.app_context():
     db.create_all()
+
+def get_year():
+    return date.today().year
 
 
 #Gravatar
@@ -185,7 +181,7 @@ def get_all_posts():
     for post in posts:
         print(post.author.name)
 
-    return render_template("index.html", all_posts=posts, current_user=current_user)
+    return render_template("index.html", all_posts=posts, current_user=current_user, year=get_year())
 
 
 # TAllow logged-in users to comment on posts
@@ -209,7 +205,7 @@ def show_post(post_id):
 
 # Use a decorator so only an admin user can create a new post
 @app.route("/new-post", methods=["GET", "POST"])
-@admin_only
+@login_required
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
@@ -264,11 +260,19 @@ def delete_post(post_id):
 def about():
     return render_template("about.html")
 
-
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        message = request.form.get("message")
+        sender = SendEmail()
+        sender.send_email(user_email=email, message=message, user_phone=phone, user_name=name)
+
     return render_template("contact.html")
 
-
 if __name__ == "__main__":
+    app.config['DEBUG'] = True
     app.run(debug=True, port=5002)
