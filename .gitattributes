@@ -1,0 +1,4 @@
+*.html linguist-language=Jinja
+static/css/* linguist-vendored
+static/js/* linguist-vendored
+*.py linguist-detectable=true
