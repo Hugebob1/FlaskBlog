@@ -49,7 +49,9 @@ pip install -r requirements.txt
 ---
 
  ## .env FILE STRUCTURE
+ ```bash
 FLASK_KEY=your-secret-flask-key
 DATABASE_URL=postgresql://username:password@host:port/dbname
 MY_EMAIL=your-email@example.com
-EMAIL_PASS=your-email-password //from google application not your real email pass.
+EMAIL_PASS=your-email-password # app password from Gmail, not your real login password
+```
