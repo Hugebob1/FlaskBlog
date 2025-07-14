@@ -1,4 +1,6 @@
-*.html linguist-language=Jinja
 static/css/* linguist-vendored
 static/js/* linguist-vendored
-*.py linguist-detectable=true
+static/fonts/* linguist-vendored
+templates/* linguist-vendored
+*.html linguist-vendored
+*.py linguist-language=Python
